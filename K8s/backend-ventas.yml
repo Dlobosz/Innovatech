@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-ventas
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-ventas
+  template:
+    metadata:
+      labels:
+        app: api-ventas
+    spec:
+      containers:
+      - name: api-ventas
+        image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-ventas
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+          limits:
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ventas
+spec:
+  selector:
+    app: api-ventas
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-ventas
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-ventas
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
