@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-frontend
+        image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-frontend:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
             cpu: "100m"
@@ -28,13 +28,13 @@ kind: Service
 metadata:
   name: svc-frontend
 spec:
+  type: LoadBalancer
   selector:
     app: frontend
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
+      port: 80          # El puerto que se expone a Internet (Load Balancer)
+      targetPort: 8080  # El puerto interno del contenedor (Vite usa 8080 en tu Dockerfile)
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
