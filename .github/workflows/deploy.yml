@@ -60,10 +60,10 @@ jobs:
 
       - name: Desplegar en EKS
         run: |
-          # Aplica todos los archivos YAML de la carpeta k8s
-          kubectl apply -f k8s/
+          # Aplica todos los archivos YAML de la carpeta K8s
+          kubectl apply -f K8s/
           
           # Fuerza a Kubernetes a descargar las imágenes recién subidas
-          kubectl rollout restart deployment frontend
+          kubectl rollout restart deployment Frontend
           kubectl rollout restart deployment api-ventas
           kubectl rollout restart deployment api-despachos
