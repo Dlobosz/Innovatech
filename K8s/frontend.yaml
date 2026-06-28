@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Frontend
+  name: frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: Frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: Frontend
+        app: frontend
     spec:
       containers:
-      - name: Frontend
+      - name: frontend
         image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-frontend
         ports:
         - containerPort: 80
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-Frontend
+  name: svc-frontend
 spec:
   selector:
-    app: Frontend
+    app: frontend
   ports:
     - protocol: TCP
       port: 80
@@ -39,12 +39,12 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-Frontend
+  name: hpa-frontend
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: Frontend
+    name: frontend
   minReplicas: 2
   maxReplicas: 4
   metrics:

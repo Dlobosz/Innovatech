@@ -64,6 +64,6 @@ jobs:
           kubectl apply -f K8s/
           
           # Fuerza a Kubernetes a descargar las imágenes recién subidas
-          kubectl rollout restart deployment Frontend
+          kubectl rollout restart deployment frontend
           kubectl rollout restart deployment api-ventas
           kubectl rollout restart deployment api-despachos
