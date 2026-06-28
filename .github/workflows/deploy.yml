@@ -61,6 +61,7 @@ jobs:
       - name: Desplegar en EKS
         run: |
           # Aplica todos los archivos YAML de la carpeta K8s
+          kubectl create namespace tienda --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f K8s/
           
           # Fuerza a Kubernetes a descargar las imágenes recién subidas
