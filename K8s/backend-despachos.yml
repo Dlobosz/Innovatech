@@ -27,7 +27,7 @@ spec:
             value: "mysql"
           # Agregamos las variables que tu log dice que faltan por si acaso
           - name: DB_ENDPOINT
-            value: "mysql"
+            value: "mysql.tienda.svc.cluster.local"
           - name: DB_PORT
             value: "3306"
         resources:
