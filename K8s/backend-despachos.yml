@@ -17,6 +17,19 @@ spec:
         image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-despachos
         ports:
         - containerPort: 8080
+        env:
+          # Forzamos la URL directa de Spring Boot
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:mysql://mysql:3306/tienda_perritos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+          - name: SPRING_DATASOURCE_USERNAME
+            value: "root"
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: "mysql"
+          # Agregamos las variables que tu log dice que faltan por si acaso
+          - name: DB_ENDPOINT
+            value: "mysql"
+          - name: DB_PORT
+            value: "3306"
         resources:
           requests:
             cpu: "250m"
