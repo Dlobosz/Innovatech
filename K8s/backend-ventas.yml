@@ -20,7 +20,7 @@ spec:
         env:
           # Forzamos la URL directa de Spring Boot
           - name: SPRING_DATASOURCE_URL
-            value: "jdbc:mysql://mysql:3306/tienda_perritos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+            value: "jdbc:mysql://mysql.tienda.svc.cluster.local:3306/tienda_perritos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
           - name: SPRING_DATASOURCE_USERNAME
             value: "root"
           - name: SPRING_DATASOURCE_PASSWORD
