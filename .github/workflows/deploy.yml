@@ -64,7 +64,7 @@ jobs:
           kubectl create namespace tienda --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f K8s/
           
-          # Fuerza a Kubernetes a descargar las imágenes recién subidas
-          kubectl rollout restart deployment frontend
-          kubectl rollout restart deployment api-ventas
-          kubectl rollout restart deployment api-despachos
+          # Fuerza a Kubernetes a descargar las imágenes recién subidas agregando el namespace correcto
+          kubectl rollout restart deployment frontend -n tienda
+          kubectl rollout restart deployment api-ventas -n tienda
+          kubectl rollout restart deployment api-despachos -n tienda
