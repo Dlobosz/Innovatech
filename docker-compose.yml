@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tienda-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: tienda_perritos
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - tienda-net
+
+  backend-ventas:
+    build:
+      context: ./backend-ventas
+      dockerfile: Dockerfile
+    container_name: api-ventas
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tienda_perritos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin123
+    ports:
+      - "8080:8080"
+    networks:
+      - tienda-net
+
+  backend-despachos:
+    build:
+      context: ./backend-despachos
+      dockerfile: Dockerfile
+    container_name: api-despachos
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tienda_perritos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin123
+    ports:
+      - "8081:8080"
+    networks:
+      - tienda-net
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    depends_on:
+      - backend-ventas
+      - backend-despachos
+    ports:
+      - "8082:8080"
+    networks:
+      - tienda-net
+
+networks:
+  tienda-net:
+    driver: bridge
+
+volumes:
+  db_data:
