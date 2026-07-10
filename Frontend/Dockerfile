@@ -13,7 +13,8 @@ RUN npm run build
 FROM nginxinc/nginx-unprivileged:alpine
 # Copiamos los archivos compilados de la Etapa 1 a la carpeta que lee Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
-# (Ojo: si usas React puro o Angular, la carpeta generada puede llamarse /app/build o /app/dist/nombre-app. Verifica esto).
+# Copiamos nuestra configuración de nginx con el proxy hacia los backends
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
