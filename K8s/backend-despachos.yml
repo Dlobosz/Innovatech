@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: api-despachos
-        image: 053777337110.dkr.ecr.us-east-1.amazonaws.com/innovatech-despachos:latest
+        image: 842973764258.dkr.ecr.us-east-1.amazonaws.com/innovatech-despachos:latest
         ports:
         - containerPort: 8080
         env:
